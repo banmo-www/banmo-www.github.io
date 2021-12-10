@@ -1,157 +1,246 @@
-<script src="http://www.google.com/jsapi" type="text/javascript"></script> 
-<script type="text/javascript">google.load("jquery", "1.3.2");</script>
 
-<style type="text/css">
-	body {
-		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-		font-weight:300;
-		font-size:18px;
-		margin-left: auto;
-		margin-right: auto;
-		width: 1100px;
-	}
-	
-	h1 {
-		font-size:32px;
-		font-weight:300;
-	}
-	
-	.disclaimerbox {
-		background-color: #eee;		
-		border: 1px solid #eeeeee;
-		border-radius: 10px ;
-		-moz-border-radius: 10px ;
-		-webkit-border-radius: 10px ;
-		padding: 20px;
-	}
+<!-- saved from url=(0047)https://www.cs.cmu.edu/~peiyunh/tiny/index.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="robots" content="noindex">
+    <link rel="StyleSheet" href="./files/style.css" type="text/css" media="all">
 
-	video.header-vid {
-		height: 140px;
-		border: 1px solid black;
-		border-radius: 10px ;
-		-moz-border-radius: 10px ;
-		-webkit-border-radius: 10px ;
-	}
-	
-	img.header-img {
-		height: 140px;
-		border: 1px solid black;
-		border-radius: 10px ;
-		-moz-border-radius: 10px ;
-		-webkit-border-radius: 10px ;
-	}
-	
-	img.rounded {
-		border: 1px solid #eeeeee;
-		border-radius: 10px ;
-		-moz-border-radius: 10px ;
-		-webkit-border-radius: 10px ;
-	}
-	
-	a:link,a:visited
-	{
-		color: #1367a7;
-		text-decoration: none;
-	}
-	a:hover {
-		color: #208799;
-	}
-	
-	td.dl-link {
-		height: 160px;
-		text-align: center;
-		font-size: 22px;
-	}
-	
-	.layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
-		box-shadow:
-		0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
-		5px 5px 0 0px #fff, /* The second layer */
-		5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
-		10px 10px 0 0px #fff, /* The third layer */
-		10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
-		15px 15px 0 0px #fff, /* The fourth layer */
-		15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
-		20px 20px 0 0px #fff, /* The fifth layer */
-		20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
-		25px 25px 0 0px #fff, /* The fifth layer */
-		25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
-		margin-left: 10px;
-		margin-right: 45px;
-	}
+    <title>BANMo: Building Animatable 3D Neural Models from Many Casual Videos
+      </title>
 
-	.paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
-		box-shadow:
-		0px 0px 1px 1px rgba(0,0,0,0.35); /* The top layer shadow */
+    <style type="text/css">
+      body {
+	    font-family : Times;
+	    background-color : #f2f2f2;
+	    font-size : 15px;
+      }
 
-		margin-left: 10px;
-		margin-right: 45px;
-	}
+      .content {
+	    width : 800px;
+	    padding : 25px 25px;
+	    margin : 25px auto;
+	    background-color : #fff;
+	    border-radius: 20px;
+      }
+      .description {
+        font-family: "Times";
+        white-space: pre;
+        text-align: left;
+      }
+
+      .content-title {
+	    background-color : inherit;
+      margin-top: 5px;
+      padding-top: 5px;
+	    margin-bottom : 0;
+	    padding-bottom : 0;
+      }
+
+      a, a:visited {
+	    text-decoration: none;
+	    color : blue;
+      }
+
+      .anchor {
+      color: inherit;
+      }
+      #authors {
+	    text-align : center;
+      }
+
+      #conference {
+	    text-align : center;
+	    font-style : italic;
+      }
+
+      #authors a {
+	    margin : 0 10px;
+      }
+
+      h1 {
+	    text-align : center;
+	    font-family : Times;
+	    font-size : 35px;
+      }
+
+      h2 {
+	    font-family : Times;
+	    font-size : 25px;
+	    padding : 0; margin : 10px;
+      }
+
+      h3 {
+	    font-family : Times;
+	    font-size : 20px;
+	    padding : 0; margin : 10px;
+      }
+
+      p {
+	    font-family : Times;
+	    line-height : 130%;
+	    margin : 10px;
+      }
+
+      big {
+	    font-family : Times;
+	    font-size : 20px;
+      }
+
+      li {
+	    margin : 10px 0;
+      }
+
+      .samples {
+	    float : left;
+	    width : 50%;
+	    text-align : center;
+      }
+
+      .cond {
+	    float : left;
+	    margin : 0 40px;
+      }
+
+      .cond-container {
+	    width : 700px;
+	    margin : 0 auto;
+	    text-align : center;
+      }
+     #vidalign {
+         display: block;
+         margin: 0px;
+         padding: 0px;
+         position: relative;
+         top: 90px;
+         height: auto;
+         max-width: auto;
+         overflow-y: hidden;
+         overflow-x:auto;
+         word-wrap:normal;
+         white-space:nowrap;
+     }
+
+    </style>
+
+  </head>
 
 
-	.layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
-		box-shadow:
-		0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
-		5px 5px 0 0px #fff, /* The second layer */
-		5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
-		10px 10px 0 0px #fff, /* The third layer */
-		10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
-		margin-top: 5px;
-		margin-left: 10px;
-		margin-right: 30px;
-		margin-bottom: 5px;
-	}
-	
-	.vert-cent {
-		position: relative;
-		top: 50%;
-		transform: translateY(-50%);
-	}
-	
-	hr
-	{
-		border: 0;
-		height: 1px;
-		background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-	}
-</style>
 
-<html>
-<head>
-	<title>BANMo: Building Animatable 3D Neural Models from Many Casual Videos</title>
-	<meta property="og:image" content="Path to my teaser.png"/> <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
-	<meta property="og:title" content="BANMo: Building Animatable 3D Neural Models from Many Casual Videos" />
-	<meta property="og:description" content="Paper description." />
+  <body>
 
-	<!-- Get from Google Analytics -->
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src=""></script> 
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
+    <div class="content content-title" style="text-align: center;">
+	    <h1>BANMo: Building Animatable 3D Neural Models from Many Casual Videos
+        </h1>
+	<p id="authors">
+      <table align="center" style="width:100%; text-align:center; table-layout: fixed">
+        <tr>
+	      <th><a href="https://gengshan-y.github.io/">Gengshan Yang<sup>2</sup></a></th>
+	      <th><a href="https://minhpvo.github.io/">Minh Vo<sup>3</sup></a></th>
+	      <th><a href="https://nneverova.github.io/">Natalia Neverova<sup>1</sup></a></th>
+        </tr>
+      </table>
+      <table align="center" style="width:100%; text-align:center; table-layout: fixed">
+        <tr>
+	      <th><a href="http://www.cs.cmu.edu/~deva/">Deva Ramanan<sup>2</sup></a></th>
+	      <th><a href="https://www.robots.ox.ac.uk/~vedaldi/">Andrea Vedaldi<sup>1</sup></a></th>
+	      <th><a href="https://jhugestar.github.io/">Hanbyul Joo<sup>1</sup></a></th>
+        </tr>
+      </table>
+      <table align="center" style="width:100%; text-align:center; table-layout: fixed">
+        <th><sup>1</sup>Meta AI</th>
+        <th><sup>2</sup>Carnegie Mellon University</th>
+        <th><sup>3</sup>Reality Labs</th>
+      </table>
+	    </p>
+	    <p>
+	    </p>
+    </div>
 
-		gtag('config', 'UA-75863369-6');
-	</script>
-</head>
 
-<body>
-	<br>
-	<center>
-		<span style="font-size:32px">BANMo: Building Animatable 3D Neural Models from Many Casual Videos</span>
-		<table align=center width=600px>
-        
-		</table>
-	</center>
+
+    <div class="content">
+      <figure style="font-family: Times; font-weight: normal; margin: 0px; padding: 0px; border: 0px; text-align: left">
+ <!--        <video playsinline controls autoplay loop muted width="810" height="320">
+                       <source  src="./vids/teaser.jpg" type="video/mp4"> 
+         </video>-->
+         <p style="text-align:center;">
+         <img src="./vids/teaser.jpg" width="750">
+         </p>
+         <br>
+	      <figcaption> Given multiple casual videos capturing a deformable object, 
+              BANMo reconstructs an animatable 3D model, including an implicit canonical 3D shape, appearance, 
+              skinning weights, and time-varying articulations, without pre-defined shape templates or registered cameras.
+              (Left) Input videos; (Middle) 3D shape, bones, and skinning weights (visualized as surface colors) defined in the canonical space; 
+              (Right) Posed reconstruction at each time instance with 3D shape, color, and canonical embeddings (correspondences are shown as the same colors).
+      </figure>
+    </div>
+    
+    <div class="content">
+      <h2>Abstract</h2>
+      <p>
+      Prior work for articulated 3D shape reconstruction often relies on specialized sensors (e.g., synchronized multi-camera systems), 
+      or pre-built 3D deformable models (e.g., SMAL or SMPL). 
+      Such methods are not able to scale to diverse sets of objects in the wild. 
+      We present BANMo, a method that requires neither a specialized sensor nor a pre-defined template shape. 
+      BANMo builds high-fidelity, articulated 3D <i>models</i> (including shape and animatable skinning weights) 
+      from many monocular casual videos in a differentiable rendering framework. 
+      While the use of many videos provides more coverage of camera views and object articulations, 
+      they introduce significant challenges in establishing correspondence across scenes with different backgrounds, 
+      illumination conditions, etc. Our key insight is to merge three schools of thought; 
+      (1) classic deformable shape models that make use of articulated bones and blend skinning, 
+      (2) volumetric neural radiance fields (NeRFs) that are amenable to gradient-based optimization, and 
+      (3) canonical embeddings that generate correspondences between pixels and an articulated model. 
+      We introduce neural blend skinning models that allow for differentiable and invertible articulated deformations.
+      When combined with canonical embeddings, such models allow us to establish dense correspondences across videos 
+      that can be self-supervised with cycle consistency. On real and synthetic datasets, 
+      BANMo shows higher-fidelity 3D reconstructions than prior works for humans and animals, 
+      with the ability to render realistic images from novel viewpoints and poses. 
+	    </p>
+      <div id="teaser" style="margin: 12px; text-align: left;border-top: 1px solid lightgray;padding-top: 12px;">
+          <!--	<a href=""> -->
+	        <strong>[Preprint]</strong>
+	      </a>           
+            
+	        <strong>[Code]</strong>
+	      
+      </div>
+    </div>
    
-    <br> 
-    We include more video results, including baseline comparisons and results on all datasets.
+  <!--
+    <div class="content">
+            <h2>Bibtex</h2>
+            <p class="description">@Article{yang2021viser,
+  title={ViSER: Video Surface Embeddings for Articulated 3D Shape Reconstruction},
+  author={Yang, Gengshan 
+      and Sun, Deqing
+      and Jampani, Varun
+      and Vlasic, Daniel
+      and Cole, Forrester
+      and Liu, Ce
+      and Ramanan, Deva},
+  journal = {arXiv preprint arXiv:2107.xxxxx},
+  year={2021}
+}  </p>
+    </div>
+  -->
+   
+    <div class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Video</h2>
+         <video controls width="810" height="520">
+          <source  src="./vids/video.mp4" type="video/mp4">
+         </video>
+    </div>
 
-    <br>
+    <div class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Results</h2>
     <h3>Comparisons<a href='./cmps.html'> >> [Click for more results]</a></hr>
 	<br>
 	<center>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
 				<td width=250px>
 			 <div>
@@ -209,7 +298,7 @@
 				</td>
 			</tr>
 		</table>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
 				<td>
 				 Comparison on Causal-cat-4. Top: reconstructed 3D shape. Bottom: reconstructed 3D shape at 1st frame.
@@ -224,16 +313,16 @@
     <h3>Results on casual-cat (10 vids) <a href='./cats.html'> >> [Click for more results]</a></hr>
 	<br>
 	<center>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
-				<td width=850px>
+				<td width=810px>
                          <video playsinline controls autoplay muted loop width="100%">
                           <source  src="./vids/cats10-{0}-all.mp4" type="video/mp4">
                          </video>
 				</td>
 			</tr>
 		</table>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
 				<td>
 				 Casual-cat-0. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
@@ -249,16 +338,16 @@
     <h3>Results on AMA (2 unique actions out of 16 vids)  <a href='./ama.html'> >> [Click for more results]</a></hr>
     <br>
 	<center>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
-				<td width=850px>
+				<td width=810px>
                          <video playsinline controls autoplay muted loop width="100%">
                           <source  src="./vids/ama-female-{0}-all.mp4" type="video/mp4">
                          </video>
 				</td>
 			</tr>
 		</table>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
 				<td>
 				 AMA-swing. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
@@ -275,16 +364,16 @@
     <h3>Results on synthetic eagle (5 vids) <a href='syn-eagle.html'> >> [Click here for more]</a></hr>
     <br>
 	<center>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
-				<td width=850px>
+				<td width=810px>
                          <video playsinline controls autoplay muted loop width="100%">
                           <source  src="./vids/a-eagle-{0}-all.mp4" type="video/mp4">
                          </video>
 				</td>
 			</tr>
 		</table>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
 				<td>
 				 Eagle-0. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
@@ -300,16 +389,16 @@
     <h3>Results on synthetic hands (5 vids) <a href='syn-hands.html'> >> [Click here for more]</a></hr>
     <br>
 	<center>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
-				<td width=850px>
+				<td width=810px>
                          <video playsinline controls autoplay muted loop width="100%">
                           <source  src="./vids/a-hands-{0}-all.mp4" type="video/mp4">
                          </video>
 				</td>
 			</tr>
 		</table>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
 				<td>
 				 Hands-0. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
@@ -324,16 +413,16 @@
     <h3>Results on shiba inu (9 vids) <a href='shiba.html'> >> [Click here for more]</a></hr>
     <br>
 	<center>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
-				<td width=850px>
+				<td width=810px>
                          <video playsinline controls autoplay muted loop width="100%">
                           <source  src="./vids/shiba-haru-{1}-all.mp4" type="video/mp4">
                          </video>
 				</td>
 			</tr>
 		</table>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
 				<td>
 				 Shiba-0. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
@@ -349,16 +438,16 @@
     <h3>Results on polar bear (4 vids) <a href='polarbear.html'> >> [Click here for more]</a></hr>
     <br>
 	<center>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
-				<td width=850px>
+				<td width=810px>
                          <video playsinline controls autoplay muted loop width="100%">
                           <source  src="./vids/polarbear-{0}-all.mp4" type="video/mp4">
                          </video>
 				</td>
 			</tr>
 		</table>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
 				<td>
 				 Polar bear-0. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
@@ -372,16 +461,16 @@
     <h3>Results on casual-human (10 vids) <a href='human.html'> >> [Click here for more]</a></hr>
     <br>
 	<center>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
-				<td width=850px>
+				<td width=810px>
                          <video playsinline controls autoplay muted loop width="100%">
                           <source  src="./vids/adult6-{5}-all.mp4" type="video/mp4">
                          </video>
 				</td>
 			</tr>
 		</table>
-		<table align=center width=850px>
+		<table align=center width=810px>
 			<tr>
 				<td>
 				 Casual-human-6. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
@@ -389,10 +478,22 @@
 			</tr>
 		</table>
 	</center>
-	<hr>
-    <br>
+    </div>
     
-	
-</body>
-</html>
+    <!--
+    <div class="content">
+            <h2>Acknowledgments</h2>
+            <p>This work was supported by the CMU Argo AI Center for Autonomous Vehicle Research and benefited from the Google Cloud Platform credits donated by Google.</p>
+    </div>
+    -->
 
+
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+<tr><td>
+    <p align="right"><font size="2">
+        <a href="https://www.cs.cmu.edu/~peiyunh/">Webpage design borrowed from Peiyun Hu</a> </font>
+    </p>
+</td></tr>
+</table>
+
+</body></html> 
