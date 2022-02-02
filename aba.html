@@ -1,0 +1,459 @@
+
+<!-- saved from url=(0047)https://www.cs.cmu.edu/~peiyunh/tiny/index.html -->
+<!-- Import the component -->
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<script type="module">
+  panViewer('#cat-pikachiu');
+  panViewer('#adult7');
+  panViewer('#dog-tetres');
+  panViewer('#cat-coco');
+  function panViewer(modelid) {
+    const modelViewer = document.querySelector(modelid);
+    const tapDistance = 2;
+    let panning = false;
+    let panX, panY;
+    let startX, startY;
+    let lastX, lastY;
+    let metersPerPixel;
+
+    const startPan = () => {
+      const orbit = modelViewer.getCameraOrbit();
+      const {theta, phi, radius} = orbit;
+      const psi = theta - modelViewer.turntableRotation;
+      metersPerPixel = 0.75 * radius / modelViewer.getBoundingClientRect().height;
+      panX = [-Math.cos(psi), 0, Math.sin(psi)];
+      panY = [
+        -Math.cos(phi) * Math.sin(psi),
+        Math.sin(phi),
+        -Math.cos(phi) * Math.cos(psi)
+      ];
+      modelViewer.interactionPrompt = 'none';
+    };
+
+    const movePan = (thisX, thisY) => {
+      const dx = (thisX - lastX) * metersPerPixel;
+      const dy = (thisY - lastY) * metersPerPixel;
+      lastX = thisX;
+      lastY = thisY;
+
+      const target = modelViewer.getCameraTarget();
+      target.x += dx * panX[0] + dy * panY[0];
+      target.y += dx * panX[1] + dy * panY[1];
+      target.z += dx * panX[2] + dy * panY[2];
+      modelViewer.cameraTarget = `${target.x}m ${target.y}m ${target.z}m`;
+
+      // This pauses turntable rotation
+      modelViewer.dispatchEvent(new CustomEvent(
+            'camera-change', {detail: {source: 'user-interaction'}}));
+    };
+
+    const recenter = (pointer) => {
+      panning = false;
+      if (Math.abs(pointer.clientX - startX) > tapDistance ||
+          Math.abs(pointer.clientY - startY) > tapDistance)
+        return;
+      const hit = modelViewer.positionAndNormalFromPoint(pointer.clientX, pointer.clientY);
+      modelViewer.cameraTarget =
+          hit == null ? 'auto auto auto' : hit.position.toString();
+    };
+
+    modelViewer.addEventListener('mousedown', (event) => {
+      startX = event.clientX;
+      startY = event.clientY;
+      panning = event.button === 2 || event.ctrlKey || event.metaKey ||
+          event.shiftKey;
+      if (!panning)
+        return;
+
+      lastX = startX;
+      lastY = startY;
+      startPan();
+      event.stopPropagation();
+    }, true);
+
+    modelViewer.addEventListener('touchstart', (event) => {
+      const {targetTouches, touches} = event;
+      startX = targetTouches[0].clientX;
+      startY = targetTouches[0].clientY;
+      panning = targetTouches.length === 2 && targetTouches.length === touches.length;
+      if (!panning)
+        return;
+
+      lastX = 0.5 * (targetTouches[0].clientX + targetTouches[1].clientX);
+      lastY = 0.5 * (targetTouches[0].clientY + targetTouches[1].clientY);
+      startPan();
+    }, true);
+
+    self.addEventListener('mousemove', (event) => {
+      if (!panning)
+        return;
+
+      movePan(event.clientX, event.clientY);
+      event.stopPropagation();
+    }, true);
+
+    modelViewer.addEventListener('touchmove', (event) => {
+      if (!panning || event.targetTouches.length !== 2)
+        return;
+
+      const {targetTouches} = event;
+      const thisX = 0.5 * (targetTouches[0].clientX + targetTouches[1].clientX);
+      const thisY = 0.5 * (targetTouches[0].clientY + targetTouches[1].clientY);
+      movePan(thisX, thisY);
+    }, true);
+
+    self.addEventListener('mouseup', (event) => {
+      recenter(event);
+    }, true);
+    
+    modelViewer.addEventListener('touchend', (event) => {
+      if (event.targetTouches.length === 0) {
+        recenter(event.changedTouches[0]);
+
+        if (event.cancelable) {
+          event.preventDefault();
+        }
+      }
+    }, true);
+  }
+</script>
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="robots" content="noindex">
+    <link rel="StyleSheet" href="./files/style.css" type="text/css" media="all">
+
+    <title>BANMo: Building Animatable 3D Neural Models from Many Casual Videos
+      </title>
+
+    <style type="text/css">
+      body {
+	    font-family : Times;
+	    background-color : #f2f2f2;
+	    font-size : 15px;
+      }
+
+      .content {
+	    width : 800px;
+	    padding : 25px 25px;
+	    margin : 25px auto;
+	    background-color : #fff;
+	    border-radius: 20px;
+      }
+      .description {
+        font-family: "Times";
+        white-space: pre;
+        text-align: left;
+      }
+
+      .content-title {
+	    background-color : inherit;
+      margin-top: 5px;
+      padding-top: 5px;
+	    margin-bottom : 0;
+	    padding-bottom : 0;
+      }
+
+      a, a:visited {
+	    text-decoration: none;
+	    color : blue;
+      }
+
+      .anchor {
+      color: inherit;
+      }
+      #authors {
+	    text-align : center;
+      }
+
+      #conference {
+	    text-align : center;
+	    font-style : italic;
+      }
+
+      #authors a {
+	    margin : 0 10px;
+      }
+
+      h1 {
+	    text-align : center;
+	    font-family : Times;
+	    font-size : 35px;
+      }
+
+      h2 {
+	    font-family : Times;
+	    font-size : 25px;
+	    padding : 0; margin : 10px;
+      }
+
+      h3 {
+	    font-family : Times;
+	    font-size : 20px;
+	    padding : 0; margin : 10px;
+      }
+
+      p {
+	    font-family : Times;
+	    line-height : 130%;
+	    margin : 10px;
+      }
+
+      big {
+	    font-family : Times;
+	    font-size : 20px;
+      }
+
+      li {
+	    margin : 10px 0;
+      }
+
+      .samples {
+	    float : left;
+	    width : 50%;
+	    text-align : center;
+      }
+
+      .cond {
+	    float : left;
+	    margin : 0 40px;
+      }
+
+      .cond-container {
+	    width : 700px;
+	    margin : 0 auto;
+	    text-align : center;
+      }
+     #vidalign {
+         display: block;
+         margin: 0px;
+         padding: 0px;
+         position: relative;
+         top: 90px;
+         height: auto;
+         max-width: auto;
+         overflow-y: hidden;
+         overflow-x:auto;
+         word-wrap:normal;
+         white-space:nowrap;
+     }
+
+    </style>
+
+    <style>
+    model-viewer {
+      width: 300px;
+      height: 300px;
+    }
+    </style>
+
+  </head>
+
+
+
+  <body>
+
+    
+    <div class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Sensitivity to inaccurate initial poses</h2>
+	<br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/pose/pose-20.mp4" type="video/mp4">
+                         </video>
+   			 <center> 20° pose error</center>
+			 </div>
+				</td>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/pose/pose-50.mp4" type="video/mp4">
+                         </video>
+   			 <center> 50° pose error</center>
+			 </div>
+				</td>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/pose/pose-90.mp4" type="video/mp4">
+                         </video>
+   			 <center> 90° pose error</center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				We inject different levels
+                of Gaussian noise into the initial root poses, leading to average 
+                rotation errors of {20, 50, 90}°. BANMo recovers a reasonable shape
+                and refines the root pose even at 90° rotation error.
+				</td>
+			</tr>
+		</table>
+	</center>
+    </div>
+    
+    <div class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Sensitivity to view coverage</h2>
+	<br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/view/ama-2v.mp4" type="video/mp4">
+                         </video>
+   			 <center> 90° view coverage (2 videos) </center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/view/ama-4v.mp4" type="video/mp4">
+                         </video>
+   			 <center> 180° view coverage (4 videos) </center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/view/ama-6v.mp4" type="video/mp4">
+                         </video>
+   			 <center> 270° view coverage (6 videos) </center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				To reconstruct a complete shape, 
+                BANMo requires all object surface to be visible from at least one frame.
+                More videos leads to more complete shape and better better skinning weights 
+                as well as a more regular motion reconstruction.
+				</td>
+			</tr>
+		</table>
+	</center>
+    </div>
+    
+    
+    <div class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Sensitivity to number of bones</h2>
+	<br>
+	<center>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/bones/ama-b4.mp4" type="video/mp4">
+                         </video>
+   			 <center> 4 bones (control points) </center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/bones/ama-b9.mp4" type="video/mp4">
+                         </video>
+   			 <center> 9 bones (control points) </center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/bones/ama-b16.mp4" type="video/mp4">
+                         </video>
+   			 <center> 16 bones (control points) </center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/bones/ama-b25.mp4" type="video/mp4">
+                         </video>
+   			 <center> 25 bones (control points) </center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/bones/ama-b64.mp4" type="video/mp4">
+                         </video>
+   			 <center> 64 bones (control points) </center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td width=250px>
+			 <div>
+                         <video playsinline controls autoplay muted width="100%">
+                          <source  src="./vids/exps/bones/ama-b100.mp4" type="video/mp4">
+                         </video>
+   			 <center> 100 bones (control points) </center>
+			 </div>
+				</td>
+			</tr>
+		</table>
+		<table align=center width=810px>
+			<tr>
+				<td>
+				We test using different number of bones for reconstruction.
+                Using too few bones fails to recover all body parts and motion
+                due to over-regularization. Using more than 16 bones
+                produces good reconstructions, but consumes more memory when computing skinning weights.
+				</td>
+			</tr>
+		</table>
+	</center>
+    </div>
+    
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+<tr><td>
+    <p align="right"><font size="2">
+        <a href="https://www.cs.cmu.edu/~peiyunh/">Webpage design borrowed from Peiyun Hu</a> </font>
+    </p>
+</td></tr>
+</table>
+
+</body></html> 
