@@ -149,8 +149,6 @@
 
       .content-title {
 	    background-color : inherit;
-      margin-top: 5px;
-      padding-top: 5px;
 	    margin-bottom : 0;
 	    padding-bottom : 0;
       }
@@ -239,6 +237,37 @@
          white-space:nowrap;
      }
 
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: rgba(0,0,0,0.2);
+      overflow: hidden;
+      position: fixed;
+      top: 0; /* Position the navbar at the top of the page */
+      width: 100%; /* Full width */
+    }
+    
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #333;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    
+    /* Change the color of links on hover */
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #04AA6D;
+      color: white;
+    }
+
     </style>
 
     <style>
@@ -250,11 +279,16 @@
 
   </head>
 
+    <div class="topnav">
+      <a class="active" href="#top">Top</a>
+      <a href="#abs">Paper/Code</a>
+      <a href="#vid">Video</a>
+      <a href="#results">Results</a>
+      <a href="#aba">Ablations</a>
+      <a href="#bib">Bibtex</a>
+    </div>
 
-
-  <body>
-
-    <div class="content content-title" style="text-align: center;">
+    <div id="top" class="content content-title" style="text-align: center;">
 	    <h1>BANMo: Building Animatable 3D Neural Models from Many Casual Videos
         </h1>
 	<p id="authors">
@@ -309,7 +343,7 @@
               <b>Right</b>: Reconstruction at each time instance. Correspondences are shown as the same colors.
     </div>
     
-    <div class="content">
+    <div id="abs" class="content">
       <h2>Abstract</h2>
       <p>
       Prior work for articulated 3D shape reconstruction often relies on specialized sensors (e.g., synchronized multi-camera systems), 
@@ -344,7 +378,7 @@
       </div>
     </div>
    
-    <div class="content">
+    <div id="vid" class="content">
       <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
       </div>
       <h2>Video</h2>
@@ -353,26 +387,11 @@
          </video>
     </div>
    
-    <div class="content">
-            <h2>Bibtex</h2>
-            <p class="description">@Article{yang2021banmo,
-  title={BANMo: Building Animatable 3D Neural Models from Many Casual Videos},
-  author={Yang, Gengshan 
-      and Vo, Minh
-      and Neverova Natalia
-      and Ramanan, Deva
-      and Vedaldi Andrea
-      and Joo Hanbyul},
-  journal = {arXiv preprint arXiv:2112.12761},
-  year={2021}
-}  </p>
-    </div>
-    
-    <div class="content">
+    <div id="results" class="content">
       <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
       </div>
-      <h2>Comparison</h2>
-    <h3><a href='./cmps.html'> >> [Click for more]</a></hr>
+      <h2>Results</h2>
+      <h3>Comparison  <a href='./cmps.html'> >> [Click for more]</a> </h3>
 	<br>
 	<center>
 		<table align=center width=810px>
@@ -441,12 +460,10 @@
 			</tr>
 		</table>
 	</center>
-    </div>
+	<hr>
+    <br>
 
-    <div class="content">
-      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
-      </div>
-      <h2>Results</h2>
+
     <h3>Casual-cat (11 videos) <a href='./cats.html'> >> [Click for more]</a></hr>
 	<br>
 	<center>
@@ -467,6 +484,8 @@
 			</tr>
 		</table>
 	</center>
+	<hr>
+    <br>
     <div>
     Canonical rest shape:
 	<center>
@@ -686,10 +705,11 @@
     
     </div>
     
-    <div class="content">
+    <div id="aba" class="content">
       <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
       </div>
-      <h2>Sensitivity to inaccurate initial poses  <a href='./aba.html'> >> [Click for more ablations] </a></h2>
+      <h2>Ablations</h2>
+      <h3>Sensitivity to inaccurate initial poses  <a href='./aba.html'> >> [Click for more ablations] </a></h3>
 	<br>
 	<center>
 		<table align=center width=810px>
@@ -733,7 +753,7 @@
 	</center>
     </div>
     
-    <div class="content">
+    <div id="more" class="content">
       <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
       </div>
       <h2>Novel view synthesis </h2>
@@ -846,6 +866,21 @@
 	</center>
     </div>
    
+    <div id="bib" class="content">
+            <h2>Bibtex</h2>
+            <p class="description">@Article{yang2021banmo,
+  title={BANMo: Building Animatable 3D Neural Models from Many Casual Videos},
+  author={Yang, Gengshan 
+      and Vo, Minh
+      and Neverova Natalia
+      and Ramanan, Deva
+      and Vedaldi Andrea
+      and Joo Hanbyul},
+  journal = {arXiv preprint arXiv:2112.12761},
+  year={2021}
+}  </p>
+    </div>
+    
 
 
     <div class="content">
