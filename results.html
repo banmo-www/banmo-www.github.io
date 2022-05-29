@@ -3,10 +3,8 @@
 <!-- Import the component -->
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 <script type="module">
-  panViewer('#cat-pikachiu');
   panViewer('#human-cap');
   panViewer('#dog-tetres');
-  panViewer('#shiba-haru');
   panViewer('#cat-coco');
   panViewer('#laikago');
   function panViewer(modelid) {
@@ -285,9 +283,7 @@
       <a class="active" href="./index.html">Back</a> 
       <a class="active" href="#top">Top</a>
       <a href="#cmp">Comparison</a>
-      <a href="#cat1">Cat-pikachiu</a>
       <a href="#psn1">Human-cap</a>
-      <a href="#dog1">Dog-haru</a>
       <a href="#cat2">Cat-coco</a>
       <a href="#dog2">Dog-tetres</a>
       <a href="#rbt">Robot-Laikago</a>
@@ -375,41 +371,6 @@
     <br>
 
 
-    <h3 id="cat1" >Casual-cat (11 videos) <a href='./cats.html'> >> [Click for more]</a></hr>
-	<br>
-	<center>
-		<table align=center width=810px>
-			<tr>
-				<td width=810px>
-                         <video playsinline controls autoplay muted loop width="100%">
-                          <source  src="./vids/cat-pikachiu-{0}-all.mp4" type="video/mp4">
-                         </video>
-				</td>
-			</tr>
-		</table>
-		<table align=center width=810px>
-			<tr>
-				<td>
-				 Casual-cat-0. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
-				</td>
-			</tr>
-		</table>
-	</center>
-	<hr>
-    <br>
-    <div>
-    Articulated shape:
-	<center>
-    <div class="mesh">
-    <model-viewer autoplay ar shadow-intensity="1"  id="cat-pikachiu" src="./meshes/cat-pikachiu.glb" alt="Canonical rest shape" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls>
-    </model-viewer>
-    </div>
-	</center>
-    </div>
-	<hr>
-    <br>
-
-	
     <h3 id="psn1" >Casual-human (10 videos) <a href='human.html'> >> [Click for more]</a></hr>
     <br>
 	<center>
@@ -417,7 +378,7 @@
 			<tr>
 				<td width=810px>
                          <video playsinline controls autoplay muted loop width="100%">
-                          <source  src="./vids/adult7-{8}-all.mp4" type="video/mp4">
+                          <source  src="./vids/adult7-{9}-all.mp4" type="video/mp4">
                          </video>
 				</td>
 			</tr>
@@ -425,49 +386,16 @@
 		<table align=center width=810px>
 			<tr>
 				<td>
-				 Casual-human-8. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
+				 Casual-human-9. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
 				</td>
 			</tr>
 		</table>
 	</center>
     <div>
-    Canonical rest shape:
+    Articulated shapes:
 	<center>
     <div class="mesh">
-    <model-viewer id="human-cap" src="./meshes/human-cap.glb" alt="Canonical rest shape" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls>
-    </model-viewer>
-    </div>
-	</center>
-    </div>
-	<hr>
-    <br>
-    
-    <h3 id="dog1">Dog(Shiba)-Haru (11 videos) <a href='./shiba.html'> >> [Click for more]</a></hr>
-    <a href="https://www.youtube.com/channel/UCYd6CmhFvvq6yruUBmGXjuA"> [youtube] </a>
-    <br>
-	<center>
-		<table align=center width=810px>
-			<tr>
-				<td width=810px>
-                         <video playsinline controls autoplay muted loop width="100%">
-                             <source  src="./vids/shiba-haru-1-{5}-all.mp4" type="video/mp4">
-                         </video>
-				</td>
-			</tr>
-		</table>
-		<table align=center width=810px>
-			<tr>
-				<td>
-				 Dog(Shiba)-Haru-5. Top left: reference image overlayed with input densepose features. Top middle: reconstructed  1st frame shape. Top right: recovered articulations in the canoincal space. Bottom row: reconstruction from front/side/top viewpoints. Correspondences are shown as the same color.
-				</td>
-			</tr>
-		</table>
-	</center>
-    <div>
-    Canonical rest shape:
-	<center>
-    <div class="mesh">
-    <model-viewer id="shiba-haru" src="./meshes/shiba-haru.glb" alt="Canonical rest shape" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls>
+    <model-viewer autoplay ar shadow-intensity="1" id="human-cap" src="./meshes/human-cap-gray.glb" alt="Canonical rest shape" ar ar-modes="webxr scene-viewer quick-look" environment-image="neutral" auto-rotate camera-controls>
     </model-viewer>
     </div>
 	</center>
